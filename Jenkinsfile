@@ -9,6 +9,11 @@ pipeline {
     WORKER = "Micro"
   }
   stages {
+    
+    stage('SonarQube analysis') {
+    	withSonarQubeEnv('LocalSonar') 
+  	}
+    
     stage('Build') {
       steps {
             bat 'mvn -B -U -e -V clean -DskipTests package'
