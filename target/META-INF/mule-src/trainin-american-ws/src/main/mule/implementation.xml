@@ -26,7 +26,9 @@ WHERE toAirport = :destination</db:sql>
 			<db:sql>SELECT *
 FROM american</db:sql>
 		</db:select>
-			</otherwise>
+				<logger level="INFO" doc:name="Logger" doc:id="07e82306-53d8-4a8e-99f2-573b82c85ade" message="Hello from the Mule Workshop!"/>
+			
+</otherwise>
 		</choice>
 		<validation:is-not-empty-collection doc:name="Is not empty collection" doc:id="a523b7e9-7d95-4225-8af8-61f5ec4c81fc">
 			<error-mapping sourceType="VALIDATION:EMPTY_COLLECTION" targetType="APP:NO_FLIGHTS_FOUND" />
