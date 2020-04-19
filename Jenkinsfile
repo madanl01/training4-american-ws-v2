@@ -16,18 +16,15 @@ pipeline {
 	    }
 	    steps {
 	        withSonarQubeEnv('sonarqube') {
-	            bat "${scannerHome}/bin/sonar-scanner" }
-	           } 
+	            bat "${scannerHome}/bin/sonar-scanner" 
+	          }
+	     } 
+	           
+	        timeout(time: 10, unit: 'MINUTES') {
+            waitForQualityGate abortPipeline: true
+            }
 	}
 	
-    stage("Quality Gate") {
-        steps {
-            timeout(time: 20, unit: 'MINUTES') {
-                // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
-                // true = set pipeline to UNSTABLE, false = don't
-                waitForQualityGate abortPipeline: true
-            }
-		} }
     
     stage('Build') {
       steps {
