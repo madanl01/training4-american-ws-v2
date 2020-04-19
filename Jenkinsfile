@@ -19,8 +19,9 @@ pipeline {
 	            bat "${scannerHome}/bin/sonar-scanner"
 	        }
 	        	         
-      		if (waitForQualityGate().status != "OK") {
+      		{ if (waitForQualityGate().status != "OK") {
          		error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+      	 		}
       		}
 	    }
 	}
