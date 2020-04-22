@@ -19,14 +19,13 @@ FROM american
 WHERE toAirport = :destination</db:sql>
 					<db:input-parameters ><![CDATA[#[{'destination': attributes.queryParams.destination}]]]></db:input-parameters>
 				</db:select>
-				<logger level="INFO" doc:name="Logger" doc:id="3dfbab62-baac-4ac4-a7bc-b4f7d032a903" message="Hello from the Mule Workshop!"/>
+				<logger level="INFO" doc:name="Logger" doc:id="3dfbab62-baac-4ac4-a7bc-b4f7d032a903" message="Hello from the Mule Workshop12"/>
 			</when>
 			<otherwise >
 				<db:select doc:name="All flights" doc:id="13978339-a263-4512-9b6b-114f1c42822d" config-ref="Database_Config">
 			<db:sql>SELECT *
 FROM american</db:sql>
 		</db:select>
-				<logger level="INFO" doc:name="Logger" doc:id="07e82306-53d8-4a8e-99f2-573b82c85ade" message="Hello from the Mule Workshop!"/>
 			
 </otherwise>
 		</choice>

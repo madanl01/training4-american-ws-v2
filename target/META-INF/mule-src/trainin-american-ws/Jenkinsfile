@@ -9,6 +9,24 @@ pipeline {
     WORKER = "Micro"
   }
   stages {
+    
+	stage('Sonarqube') {
+	    environment {
+	        scannerHome = tool 'sonarscanner'
+	    }
+	    steps {
+	        withSonarQubeEnv('sonarqube') {
+	            bat "${scannerHome}/bin/sonar-scanner" 
+	          }
+	          
+	        timeout(time: 10, unit: 'MINUTES') {
+            waitForQualityGate abortPipeline: true
+            }
+	     }          
+	        
+	}
+	
+    
     stage('Build') {
       steps {
             bat 'mvn -B -U -e -V clean -DskipTests package'
