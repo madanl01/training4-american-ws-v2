@@ -41,7 +41,7 @@ pipeline {
      stage('Deploy Development') {
       environment {
         ENVIRONMENT = 'Sandbox'
-        APP_NAME = 'sandbox-training4-american-ws-ml'
+        APP_NAME = 'sandbox-training4-american-ws-ml01'
       }
       steps {
             bat 'mvn -U -V -e -B -DskipTests deploy -DmuleDeploy -Dmule.version="%MULE_VERSION%" -Danypoint.username="%DEPLOY_CREDS_USR%" -Danypoint.password="%DEPLOY_CREDS_PSW%" -Dcloudhub.app="%APP_NAME%" -Dcloudhub.environment="%ENVIRONMENT%" -Dcloudhub.bg="%BG%" -Dcloudhub.worker="%WORKER%"'
