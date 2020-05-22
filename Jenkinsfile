@@ -1,4 +1,5 @@
 pipeline {
+
 ////
   agent any
   environment {    
@@ -39,6 +40,10 @@ pipeline {
     }
 
      stage('Deploy Development') {
+     	
+     	when { branch 'develop'
+     	}
+     
       environment {
         ENVIRONMENT = 'Sandbox'
         APP_NAME = 'sandbox-training4-american-ws-ml01'
@@ -48,6 +53,19 @@ pipeline {
       }
     }
 
+     stage('Deploy Production') {
+     	
+     	when { branch 'master'
+     	}
+     
+      environment {
+        ENVIRONMENT = 'Sandbox'
+        APP_NAME = 'sandbox-training4-american-ws-ml01'
+      }
+      steps {
+            bat 'mvn -U -V -e -B -DskipTests deploy -DmuleDeploy -Dmule.version="%MULE_VERSION%" -Danypoint.username="%DEPLOY_CREDS_USR%" -Danypoint.password="%DEPLOY_CREDS_PSW%" -Dcloudhub.app="%APP_NAME%" -Dcloudhub.environment="%ENVIRONMENT%" -Dcloudhub.bg="%BG%" -Dcloudhub.worker="%WORKER%"'
+      }
+    }
   }
 
   tools {
