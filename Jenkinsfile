@@ -95,7 +95,7 @@ pipeline {
      stage('Deploy Production') {
      	
 	     when { 
-			tag pattern: "v\\d+", comparator: "REGEXP" } 
+			tag pattern: "v\\d+", comparator: "REGEXP"
 		  }
      	 
       environment {
