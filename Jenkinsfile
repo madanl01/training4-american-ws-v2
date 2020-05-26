@@ -52,14 +52,61 @@ pipeline {
             bat 'mvn -U -V -e -B -DskipTests deploy -DmuleDeploy -Dmule.version="%MULE_VERSION%" -Danypoint.username="%DEPLOY_CREDS_USR%" -Danypoint.password="%DEPLOY_CREDS_PSW%" -Dcloudhub.app="%APP_NAME%" -Dcloudhub.environment="%ENVIRONMENT%" -Dcloudhub.bg="%BG%" -Dcloudhub.worker="%WORKER%"'
       }
     }
+	  
+    stages {
+        stage('Input') {
+            steps {
+				timeout(time: 15, unit: "MINUTES") {
+				input message: 'Do you want to approve the deploy in  production?', ok: 'Yes', submitter: 'admin'
+				}
+            }
+        }
+
+        stage('If Proceed is clicked') {
+            steps {
+                print('hello')
+            }
+        }
+    }
+
+    stages {
+        stage("Interactive_Input") {
+            steps {
+                script {
+                    // Variables for input
+                    def inputENV
+                    def inputAPPNAME
+                    // Get the input
+                    def userInput = input(
+                            id: 'userInput', message: 'Enter path of test reports:?',
+                            parameters: [
+                                    string(defaultValue: 'None',
+                                            description: 'Deployment Environment',
+                                            name: 'ENV'),
+                                    string(defaultValue: 'None',
+                                            description: 'Application name',
+                                            name: 'APPNAME'),
+                            ])
+
+                    // Save to variables. Default to empty string if not found.
+                    inputENV = userInput.ENV?:''
+                    inputAPPNAME = userInput.APPNAME?:''
+
+                    // Echo to console
+                    echo("Deployment Environment: ${inputENV}")
+                    echo("Application name: ${inputAPPNAME}")
+
+                }
+            }
+        }
+    }
+
 
      stage('Deploy Production') {
      	
      	when { branch 'master'
      	}
       
-
-
       environment {
         ENVIRONMENT = 'Sandbox'
         APP_NAME = 'sandbox-training4-american-ws-ml01'
