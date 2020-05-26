@@ -95,7 +95,7 @@ pipeline {
      stage('Deploy Production') {
      	
      	when { branch 'master'
-	       tag "v*" 
+	       tag pattern: "v\\d+", comparator: "REGEXP" }
      	}
       
       environment {
