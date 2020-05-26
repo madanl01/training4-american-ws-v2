@@ -94,10 +94,12 @@ pipeline {
 
      stage('Deploy Production') {
      	
-     	when { branch 'master'
-	       tag pattern: "v\\d+", comparator: "REGEXP" }
-     	}
-      
+	     when { 
+		     allOf { 
+		     	branch 'master' 
+			tag pattern: "v\\d+", comparator: "REGEXP" } 
+		  }
+     	 
       environment {
         ENVIRONMENT = 'Sandbox'
         APP_NAME = 'sandbox-training4-american-ws-ml01'
