@@ -95,6 +95,7 @@ pipeline {
      stage('Deploy Production') {
      	
      	when { branch 'master'
+	       tag "v*" 
      	}
       
       environment {
