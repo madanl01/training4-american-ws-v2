@@ -53,23 +53,22 @@ pipeline {
       }
     }
 	  
-    stages {
-        stage('Input') {
-            steps {
+
+	stage('Input') {
+	    steps {
 				timeout(time: 15, unit: "MINUTES") {
 				input message: 'Do you want to approve the deploy in  production?', ok: 'Yes', submitter: 'admin'
 				}
-            }
-        }
+	    }
+	}
 
-        stage('If Proceed is clicked') {
-            steps {
-                print('hello')
-            }
-        }
-    }
+	stage('If Proceed is clicked') {
+	    steps {
+		print('hello')
+	    }
+	}
 
-    stages {
+
         stage("Interactive_Input") {
             steps {
                 script {
@@ -99,8 +98,6 @@ pipeline {
                 }
             }
         }
-    }
-
 
      stage('Deploy Production') {
      	
@@ -111,16 +108,8 @@ pipeline {
         ENVIRONMENT = 'Sandbox'
         APP_NAME = 'sandbox-training4-american-ws-ml01'
       }
-      steps {
-	      
-		timeout(time: 15, unit: "MINUTES") {
-			input message: 'Do you want to approve the deploy in production?', ok: 'Yes', parameters: [string(defaultValue: 'Input1', description: 'Input1', name: 'Input1', trim: false), string(defaultValue: 'Input2', description: 'Input2', name: 'Input2', trim: false), string(defaultValue: 'Input3', description: 'Input3', name: 'Input3', trim: false)], submitter: 'admin'
-		}
-
-		echo "Input1:"Input1
-		echo "Input2:"Input2	
-		echo "Input3:"Input3
-	      
+      steps {	      
+    
             bat 'mvn -U -V -e -B -DskipTests deploy -DmuleDeploy -Dmule.version="%MULE_VERSION%" -Danypoint.username="%DEPLOY_CREDS_USR%" -Danypoint.password="%DEPLOY_CREDS_PSW%" -Dcloudhub.app="%APP_NAME%" -Dcloudhub.environment="%ENVIRONMENT%" -Dcloudhub.bg="%BG%" -Dcloudhub.worker="%WORKER%"'
       }
     }
