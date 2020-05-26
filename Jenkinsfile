@@ -62,14 +62,7 @@ pipeline {
 	    }
 	}
 
-	stage('If Proceed is clicked') {
-	    steps {
-		print('hello')
-	    }
-	}
-
-
-        stage("Interactive_Input") {
+       stage("Interactive_Input") {
             steps {
                 script {
                     // Variables for input
@@ -77,7 +70,7 @@ pipeline {
                     def inputAPPNAME
                     // Get the input
                     def userInput = input(
-                            id: 'userInput', message: 'Enter path of test reports:?',
+                            id: 'userInput', message: 'Enter Deployment Environment & Application name:?',
                             parameters: [
                                     string(defaultValue: 'None',
                                             description: 'Deployment Environment',
