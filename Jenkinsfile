@@ -95,8 +95,6 @@ pipeline {
      stage('Deploy Production') {
      	
 	     when { 
-		     allOf { 
-		     	branch 'master' 
 			tag pattern: "v\\d+", comparator: "REGEXP" } 
 		  }
      	 
