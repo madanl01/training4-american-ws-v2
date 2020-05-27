@@ -9,13 +9,22 @@ pipeline {
     WORKER = "Micro"
   }
   stages {
+	  
 	stage('Scm Checkout') {
+	
 		steps {
-			echo "Pulling changes from the branch ${params.branch}"
-			git url: 'https://github.com/madanl01/training4-american-ws-v2.git',branch:"${params.branch}"
+			script {
+				checkout(
+					[$class: 'GitSCM', branches: [[name: "${params.BRANCH}"]], doGenerateSubmoduleConfigurations: false, 
+					extensions: [], submoduleCfg: [], 
+					userRemoteConfigs: [[credentialsId: 'Github', 
+					url: 'https://github.com/madanl01/training4-american-ws-v2.git']]]
+				)
+			}	
 		}
 	}
 	  
+  
 	stage('Sonarqube') {
 	    environment {
 	        scannerHome = tool 'sonarscanner'
