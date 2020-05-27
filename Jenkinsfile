@@ -2,6 +2,11 @@ pipeline {
 
 ////////////
   agent any
+	
+   parameters {
+    gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
+  }
+	
   environment {    
     DEPLOY_CREDS = credentials('deploy-anypoint-user')
     MULE_VERSION = '4.1.4'
@@ -13,19 +18,13 @@ pipeline {
 	stage('Scm Checkout') {
 	
 		steps {
-			script {
-				checkout(
-					[$class: 'GitSCM', branches: [[name: "${params.BRANCH}"]], doGenerateSubmoduleConfigurations: false, 
-					extensions: [], submoduleCfg: [], 
-					userRemoteConfigs: [[credentialsId: 'Github', 
-					url: 'https://github.com/madanl01/training4-american-ws-v2.git']]]
-				)
-			}	
+			
+		  git branch: "${params.BRANCH}", url: 'https://github.com/jenkinsci/git-parameter-plugin.git'
+			 	
 		}
 	}
 	  
-  
-	stage('Sonarqube') {
+  	stage('Sonarqube') {
 	    environment {
 	        scannerHome = tool 'sonarscanner'
 	    }
