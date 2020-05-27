@@ -36,14 +36,13 @@ pipeline {
     stage('Test') {
       steps {
 	  bat "mvn test"
-	  echo "branch: ${branch}"
-      }
+	}
     }
 
      stage('Deploy Development') {
      	
-     	when { branch 'develop'
-     	}
+//     	when { branch 'develop'
+//     	}
      
       environment {
         ENVIRONMENT = 'Sandbox'
