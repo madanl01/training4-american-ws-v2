@@ -35,6 +35,7 @@ pipeline {
 
     stage('Test') {
       steps {
+	  bat 'printenv'
           bat "mvn test"
       }
     }
