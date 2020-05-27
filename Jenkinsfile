@@ -9,7 +9,13 @@ pipeline {
     WORKER = "Micro"
   }
   stages {
-    
+	stage('Scm Checkout') {
+
+	echo "Pulling changes from the branch ${params.branch}"
+	git url: 'https://github.com/madanl01/training4-american-ws-v2.git',branch:"${params.branch}"
+
+	}
+	  
 	stage('Sonarqube') {
 	    environment {
 	        scannerHome = tool 'sonarscanner'
