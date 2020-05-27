@@ -35,8 +35,8 @@ pipeline {
 
     stage('Test') {
       steps {
-	  bat 'printenv'
-          bat "mvn test"
+	  bat "mvn test"
+	  echo "branch: ${branch}"
       }
     }
 
